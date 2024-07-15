@@ -44,5 +44,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: timtween-playcanvas
+          name: timtween-playcanvas-min-js
           path: dist/timtween-playcanvas.min.js
