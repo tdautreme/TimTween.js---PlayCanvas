@@ -1,0 +1,40 @@
+name: Build and Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Read filelist.txt and concatenate files
+        run: |
+          mkdir -p dist
+          while IFS= read -r file; do
+            cat "$file" >> dist/timtween-playcanvas.tmp.js
+          done < filelist.txt
+          # Minify and concatenate into timtween-playcanvas.min.js
+          npx terser dist/timtween-playcanvas.tmp.js -o dist/timtween-playcanvas.min.js --compress --mangle
+          rm dist/timtween-playcanvas.tmp.js
+        shell: bash
+        env:
+          NODE_ENV: production
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: timtween-playcanvas
+          path: dist/timtween-playcanvas.min.js
