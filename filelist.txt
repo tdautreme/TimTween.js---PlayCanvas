@@ -7,4 +7,4 @@ src/TimTween.js/tween-ease-functions.js
 src/TimTween.js/tween-repeat-functions.js
 src/TimTween.js/tween-do.js
 src/TimTween.js/tween-manager.js
-src/TimTween.js/pctween-manager.js
+src/pctween-manager.js
